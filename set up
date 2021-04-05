@@ -1,0 +1,37 @@
+horizontal bar chart-slice for top 10
+Need OTU name for y axis- otu_ids
+Need OTU values for x axis- sample_values
+Need OTU labels for hover text- otu_lables
+var barTrace = {
+    type: 'bar',
+    x: OTU values,
+    y: OTU names,
+    orientation: 'h',
+    text: OTU labels
+}
+
+
+bubble chart slice for top 10
+Need OTU name for x axis- otu_ids
+Need OTU values for y axis- sample_values
+How do you use OTU Ids for bubble color?
+varbubbleTrace = {
+    x:
+    y:
+    mode: 'markers'
+    marker :{
+        size:[SAMPLE_VALUES]
+    }
+}
+
+demographic info needed:
+all in meta data
+id
+ethnicity
+gender
+age 
+location
+bbtype
+wfreq
+
+
