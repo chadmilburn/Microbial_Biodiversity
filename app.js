@@ -2,7 +2,7 @@
 function buildPlot(selection) {
 
   d3.json('samples.json').then(function (data) {
-    // console.log(data);
+    console.log(data);
     // get to samples to get needed data-to line 10 gets dict to get indivdaul points
     var filteredData = data.samples;
     // console.log(filteredData)
@@ -61,7 +61,8 @@ function buildPlot(selection) {
       marker: {
         size: sampleValues,
         color: idValues
-      }
+      },
+      text: barHoverText
     }
     var bubbleData = [bubbleTrace]
 
@@ -92,14 +93,21 @@ function demographicData(selection) {
     // console.log(selectionMD)
     // select demographic info from HTML-line31
     var demographicInfo = d3.select("#sample-metadata")
+    // clear out info for new id
+    demographicInfo.html("");
     // add to html
     Object.entries(selectionMD).forEach((key)=> {
-      demographicInfo.append("h6").text(key[0].toUpperCase() + ": " +key[1]+ "\n");
+      demographicInfo.append("h5").text(key[0].toUpperCase() + ": " +key[1]+ "\n");
     });
   });
 
 };
 // demographicData("953")
+
+function optionChanged(selection){
+  buildPlot(selection);
+  demographicData(selection);
+}
 
 function init(){
   // html line 25 drop down 
@@ -116,4 +124,7 @@ function init(){
   });
 };
 
+
+
+// initialize dashboard
 init();
