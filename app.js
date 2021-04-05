@@ -76,17 +76,44 @@ function buildPlot(selection) {
   });
 
 }
-buildPlot("953")
+// buildPlot("953")
 
 
 //  function for demographic info
 function demographicData(selection) {
   // view data again
-  d3.json('samples.json').then((data)=> {
-    console.log(data)
-  var metaData= data.metadata
-  console.log(metaData)
-  })
+  d3.json('samples.json').then((data) => {
+    // console.log(data)
+    // all metadata
+    var metaData = data.metadata
+    // console.log(metaData);
+    // selection metadata
+    var selectionMD = metaData.filter(meta => meta.id.toString() === selection)[0];
+    // console.log(selectionMD)
+    // select demographic info from HTML-line31
+    var demographicInfo = d3.select("#sample-metadata")
+    // add to html
+    Object.entries(selectionMD).forEach((key)=> {
+      demographicInfo.append("h6").text(key[0].toUpperCase() + ": " +key[1]+ "\n");
+    });
+  });
 
 };
-demographicData("953")
+// demographicData("953")
+
+function init(){
+  // html line 25 drop down 
+  var dropdown = d3.select("#selDataset");
+  // view json again
+  d3.json('samples.json').then((data)=>{
+    // console.log(data)
+    // add names to drop down 
+    data.names.forEach(function(name){
+      dropdown.append("option").text(name).property("value");
+    });
+    buildPlot(data.names[0]);
+    demographicData(data.names[0]);
+  });
+};
+
+init();
