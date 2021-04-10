@@ -2,7 +2,7 @@
 function buildPlot(selection) {
 
   d3.json('samples.json').then(function (data) {
-    console.log(data);
+    // console.log(data);
     // get to samples to get needed data-to line 10 gets dict to get indivdaul points
     var filteredData = data.samples;
     // console.log(filteredData)
@@ -39,11 +39,36 @@ function buildPlot(selection) {
     var barHoverText = hoverText.slice(0, 10).reverse();
     // console.log("barHoverText")
     // console.log(barHoverText)
+// Not working will come back later to work on 
+    // var wfreq = data.metadata.map(d => d.wfreq)
+    // console.log(wfreq)
+    // // create gauge chart
+    // var metaData = data.metadata
+    // var result = metaData.filter(meta => meta.id.toString() == id)[0]
+    // var  gaugeTrace =[{
+    //   domain: {x:[0,1], y:[0,1]},
+    //   value: parseFloat(result.wfreq),
+    //   title: {text: `Weekly Washing Frequency`},
+    //   type: 'indicator',
+    //   mode: 'gauge+number',
+    //   gauge: {axis:{range:[null, 9]},
+    //         steps:[
+    //           {range: [0,2], color:"yellow"},
+    //           {range:[2,4], color:"cyan"},
+    //           {range:[4,6], color:"teal"},
+    //           {range:[6,8],color:"lime"},
+    //           {range:[8,9], color:"green"},
+    //         ]}
+    // }]
+    // var guageData= [gaugeTrace]
+    // var gaugeLayout = {
+    //   width: 700,
+    //   height: 600,
+    //   margin: {t:20, b:40, l:100, r:100}
+    // }
+    // Plotly.newPlot("guage", guageData, gaugeLayout)
 
-
-
-
-    // create bar chart
+       // create bar chart
     var barTrace = {
       type: 'bar',
       x: otuValues,
@@ -96,27 +121,27 @@ function demographicData(selection) {
     // clear out info for new id
     demographicInfo.html("");
     // add to html
-    Object.entries(selectionMD).forEach((key)=> {
-      demographicInfo.append("h5").text(key[0].toUpperCase() + ": " +key[1]+ "\n");
+    Object.entries(selectionMD).forEach((key) => {
+      demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");
     });
   });
 
 };
 // demographicData("953")
 
-function optionChanged(selection){
+function optionChanged(selection) {
   buildPlot(selection);
   demographicData(selection);
 }
 
-function init(){
+function init() {
   // html line 25 drop down 
   var dropdown = d3.select("#selDataset");
   // view json again
-  d3.json('samples.json').then((data)=>{
+  d3.json('samples.json').then((data) => {
     // console.log(data)
     // add names to drop down 
-    data.names.forEach(function(name){
+    data.names.forEach(function (name) {
       dropdown.append("option").text(name).property("value");
     });
     buildPlot(data.names[0]);
