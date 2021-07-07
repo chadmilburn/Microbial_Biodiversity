@@ -34,12 +34,71 @@ The dataset reveals that a small handful of microbial species (also called opera
 * Use `otu_labels` for the text values.
 
 ![Bubble Chart](Images/bubble_chart.png)
+```
+       // create bar chart
+    var barTrace = {
+      type: 'bar',
+      x: otuValues,
+      y: chartreadyIDS,
+      orientation: 'h',
+      text: barHoverText
+    };
+    var barData = [barTrace];
+    Plotly.newPlot('bar', barData);
+    // create bubble chart
+    var bubbleTrace = {
+      x: idValues,
+      y: sampleValues,
+      mode: 'markers',
+      marker: {
+        size: sampleValues,
+        color: idValues
+      },
+      text: barHoverText
+    }
+    var bubbleData = [bubbleTrace]
+
+    var bubbleLayout = {
+      xaxis: {
+        title: "OTU ID"
+      }
+    }
+
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout)
+
+  });
+
+}
+```
 
 4. Display the sample metadata, i.e., an individual's demographic information.
 
 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 
 ![hw](Images/hw03.png)
+```'//  function for demographic info
+function demographicData(selection) {
+  // view data again
+  d3.json('samples.json').then((data) => {
+    // console.log(data)
+    // all metadata
+    var metaData = data.metadata
+    // console.log(metaData);
+    // selection metadata
+    var selectionMD = metaData.filter(meta => meta.id.toString() === selection)[0];
+    // console.log(selectionMD)
+    // select demographic info from HTML-line31
+    var demographicInfo = d3.select("#sample-metadata")
+    // clear out info for new id
+    demographicInfo.html("");
+    // add to html
+    Object.entries(selectionMD).forEach((key) => {
+      demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");
+    });
+  });
+
+};
+```
 
 6. Update all of the plots any time that a new sample is selected.
 
